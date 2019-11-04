@@ -1,0 +1,22 @@
+{
+  "name": "exatauser",
+  "version": "1.0.0",
+  "description": "microservicio users",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertoaguilar1/exataUser.git"
+  },
+  "keywords": [
+    "users"
+  ],
+  "author": "jaguilarh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albertoaguilar1/exataUser/issues"
+  },
+  "homepage": "https://github.com/albertoaguilar1/exataUser#readme"
+}
