@@ -10,6 +10,10 @@ let app = express();
 // Import routes
 let apiRoutes = require('./api-routes');
 // Configure bodyparser to handle post requests
+let swaggerUi = require('swagger-ui-express');
+let swaggerDocument = require('./swagger.json');
+
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -34,6 +38,7 @@ var port = process.env.PORT || 8080;
 app.get('/', (req, res) => res.send('Hello World with Express UXsers'));
 
 // Use Api routes in the App
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
