@@ -38,7 +38,7 @@ var port = process.env.PORT || 8080;
 app.get('/', (req, res) => res.send('Hello World with Express UXsers'));
 
 // Use Api routes in the App
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs/usuarios', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
