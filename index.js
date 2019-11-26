@@ -20,9 +20,9 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
 
-//mongoose.connect('mongodb://localhost:27017/museum_db', { useNewUrlParser: true});
+//mongoose.connect('mongodb://192.168.99.100:32768:27017/museum_db', { useNewUrlParser: true});
 
-mongoose.connect('mongodb://localhost:27017/museum_db', {
+mongoose.connect('mongodb://192.168.99.100:32768:27017/museum_db', {
     useUnifiedTopology: true,
     useNewUrlParser: true})
     .then(() => console.log("Connected to Database"))

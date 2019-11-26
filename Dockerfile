@@ -6,7 +6,4 @@ RUN npm install
 RUN npm i -s nodemon
 COPY . /usr/src/app
 EXPOSE 8080
-ENV PORT=8080
-ENV MONGO_SERVICE_HOST=museum_db
-ENV MONGO_SERVICE_PORT=27017
 CMD [ "npm", "start" ]
