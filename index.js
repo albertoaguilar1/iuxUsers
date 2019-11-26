@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 //mongoose.connect('mongodb://192.168.99.100:32768/museum_db', { useNewUrlParser: true});
 
-mongoose.connect('mongodb://127.0.0.7:27017/museum_db', {
+mongoose.connect('mongodb://172.17.0.3:27017/museum_db', {
     useUnifiedTopology: true,
     useNewUrlParser: true})
     .then(() => console.log("Connected to Database"))
