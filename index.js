@@ -22,7 +22,11 @@ app.use(bodyParser.json());
 
 //mongoose.connect('mongodb://192.168.99.100:32768/museum_db', { useNewUrlParser: true});
 
-mongoose.connect('mongodb://172.17.0.3:27017/museum_db', {
+var mongo_host = (process.env.MONGO_SERVICE_HOST || 'localhost' );
+var mongo_port = (process.env.MONGO_SERVICE_PORT || 27017 );
+var url = 'mongodb://'+mongo_host+':'+mongo_port+'/museum_db';
+
+mongoose.connect(url, {
     useUnifiedTopology: true,
     useNewUrlParser: true})
     .then(() => console.log("Connected to Database"))
