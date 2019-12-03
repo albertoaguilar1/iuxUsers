@@ -29,8 +29,8 @@ var url = 'mongodb://'+mongo_host+':'+mongo_port+'/museum_db';
 mongoose.connect(url, {
     useUnifiedTopology: true,
     useNewUrlParser: true})
-    .then(() => console.log("Connected to Database"))
-    .catch(err => console.error("Error connecting db", err));
+    .then(() => console.log("Connected to Database"+"____"+url))
+    .catch(err => console.error("Error connecting db", err + url));
 
 var db = mongoose.connection;
 
@@ -47,5 +47,5 @@ app.use('/api-docs/usuarios', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
 app.listen(port, function () {
-    console.log("* Running exacta_Server on port " + port);
+    console.log("* Running exacta_ServerUser on port " + port);
 });
