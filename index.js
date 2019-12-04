@@ -39,7 +39,7 @@ var port = process.env.PORT || 8080;
 
 // Send message for default URL
 
-app.get('/', (req, res) => res.send('Hello World with Express UXsers'));
+app.get('/', (req, res) => res.send('Hello World with Express UXsers *******'));
 
 // Use Api routes in the App
 app.use('/api-docs/usuarios', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
