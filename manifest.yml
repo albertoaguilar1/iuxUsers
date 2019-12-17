@@ -1,0 +1,6 @@
+applications:
+- path: .
+  memory: 64M
+  instances: 1
+  name: exataUsers
+  buildpack: sdk-for-nodejs
