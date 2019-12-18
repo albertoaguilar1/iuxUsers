@@ -13,7 +13,6 @@ spec:
   selector:
     run: exatauser
 
----
 apiVersion: app/v1
 kind: Deployment
 metadata:
