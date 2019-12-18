@@ -33,15 +33,5 @@ api.get('/',function(req,res){
     
     
 
-
-
-    
-
-
-
-
-
-
-
 // Exportamos la configuración
 module.exports = api;

@@ -22,16 +22,13 @@ exports.index = function (req, res) {
 
 
 
-
-
-
 // Handle view users info
 exports.view= (req, res) => {
     console.log("view"); 
   // Validate request
   if(!req.params.users_id) {
     return res.status(400).send({
-        message: "User NameUser can not be empty"
+        message: "User users_id can not be empty"
     });
 }
 
@@ -74,7 +71,7 @@ exports.view= (req, res) => {
 
 
 
-// Create and Save a new Note
+// Create and Save a new user
 exports.new= (req, res) => {
     console.log("new  " ); 
   // Validate request
@@ -129,7 +126,7 @@ exports.new= (req, res) => {
 
 
 
-// Update a note identified by the UserId in the request
+// Update a user identified by the UserId in the request
 exports.update = (req, res) => {
 
     console.log("update  " +   req.params.users_id); 
@@ -149,7 +146,7 @@ exports.update = (req, res) => {
         });
     }
 
-    // Find note and update it with the request body
+    // Find User and update it with the request body
     Users.findByIdAndUpdate(req.params.users_id, {
         NameUser : req.body.NameUser ? req.body.NameUser : users.NameUser,
         LastNameUser : req.body.LastNameUser,
@@ -225,7 +222,7 @@ exports.delete = (req, res) => {
             });                
         }
         return res.status(500).send({
-            message: "Could not delete note with id " + req.params.users_id,
+            message: "Could not delete User with id " + req.params.users_id,
             status:'500',
             data: err
         });
