@@ -27,6 +27,6 @@ spec:
     spec:
       containers:
       - name: exatauser
-        image: us.icr.io/iux-miaspace1/microswsuser
+        image: us.icr.io/iux-miaspace1/iux-users
         ports:
         - containerPort: 8080
