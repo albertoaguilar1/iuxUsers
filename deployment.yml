@@ -1,19 +1,4 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: exatauser
-  labels:
-    run: exatauser
-spec:
-  ports:
-  - port: 80
-    targetPort: 8080
-    protocol: TCP
-  type: NodePort
-  selector:
-    run: exatauser
-
-apiVersion: app/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: exatauser
@@ -29,3 +14,24 @@ spec:
         image: us.icr.io/iux-miaspace1/iux-users
         ports:
         - containerPort: 8080
+        
+---
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: exatauser
+  labels:
+    run: exatauser
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+  type: NodePort
+  selector:
+    run: exatauser
+
+
