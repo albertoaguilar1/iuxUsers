@@ -21,6 +21,50 @@ exports.index = function (req, res) {
 };
 
 
+// Handle view users info
+exports.viewEmail= (req, res) => {
+    console.log("viewEmail"); 
+  // Validate request
+  if(!req.params.EmailUser) {
+    return res.status(400).send({
+        message: "User EmailUser can not be empty"
+    });
+}
+
+
+    Users.findOne({EmailUser:req.params.EmailUser})
+    .then(users => {
+        if(!users) {
+            return res.status(404).send({
+                message: "User not found with email " + req.params.EmailUser,
+                status:'400',
+                data: err
+            });            
+        }
+        return res.status(200).send({
+            status: "success",
+            message: "Users found",
+            data: users
+        });
+   
+    }).catch(err => {
+        console.log(err)
+        if(err.kind === 'EmailUser') {
+            return res.status(404).send({
+                message: "User not found with email " + req.params.EmailUser,
+                status:'404',
+                data: err
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving User with id " + req.params.EmailUser,
+            status:'500',
+            data: err
+        });
+    });
+};
+
+
 
 // Handle view users info
 exports.view= (req, res) => {
@@ -130,12 +174,7 @@ exports.new= (req, res) => {
 exports.update = (req, res) => {
 
     console.log("update  " +   req.params.users_id); 
-    // Validate Request
-    if(!req.params.users_id) {
-        return res.status(400).send({
-            message: "User id can not be empty"
-        });
-    }
+ 
 
 
       // Validate Request

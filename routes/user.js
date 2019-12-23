@@ -31,7 +31,8 @@ api.get('/',function(req,res){
     .put(usersController.update)
     .delete(usersController.delete);
     
-    
+    api.route('/users/email/:EmailUser')
+    .get(usersController.viewEmail)
 
 // Exportamos la configuración
 module.exports = api;

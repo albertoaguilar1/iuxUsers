@@ -16,13 +16,28 @@ var mongo_host = (process.env.MONGO_SERVICE_HOST || 'localhost' );
 var mongo_port = (process.env.MONGO_SERVICE_PORT || 27017 );
 var url = 'mongodb://'+mongo_host+':'+mongo_port+'/museum_db';
 
-mongoose.connect(url, {
+
+const options = {
     useUnifiedTopology: true,
-    useNewUrlParser: true})
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+   // autoIndex: false, // Don't build indexes
+    reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+    reconnectInterval: 500, // Reconnect every 500ms
+    poolSize: 10, // Maintain up to 10 socket connections
+    // If not connected, return errors immediately rather than waiting for reconnect
+    bufferMaxEntries: 0,
+    connectTimeoutMS: 10000, // Give up initial connection after 10 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    family: 4 // Use IPv4, skip trying IPv6
+  };
+
+mongoose.connect(url, options)
     .then(() => console.log("La conexión a la base de datos museum_db se ha realizado correctamente"+"_"+url))
     .catch(err => console.log("Error connecting db", err + url));
 
-var db = mongoose.connection;
+
 
 
 // Setup server port

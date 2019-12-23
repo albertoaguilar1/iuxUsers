@@ -7,7 +7,8 @@ var bodyParser = require('body-parser');
 var app = express();
 // Importamos las rutas
 var user_routes = require('./routes/user'); 
-
+//cargamos morgan
+var morgan = require('morgan');
 // Cargamos la apide swageger para documetar 
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger.json');
@@ -18,7 +19,14 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 // Cargamos las rutas
 
+////////////////////////  Configuración para Morgan y creación del stream node.lo
+var fs = require('fs'); var util = require('util');
 
+app.use(morgan('combined', {stream: fs.createWriteStream(__dirname + '/node.log', {flags : 'a'})}));
+
+
+
+/////////////////////////
 
 // Send message for default URL
 
