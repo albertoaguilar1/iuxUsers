@@ -1,10 +1,21 @@
 'use strict'
+//jwt
+var jwt = require('jsonwebtoken');
+//encrypting passwords.
+var bcrypt = require('bcryptjs');
 // Cargamos los modelos para usarlos posteriormente
 var Users = require('../models/user');
+var config = require('../config');
+
+
+
+
 
 
 // Handle index actions
 exports.index = function (req, res) {
+
+
     Users.get(function (err, users) {
         if (err) {
             return res.status(404).send({
@@ -20,6 +31,97 @@ exports.index = function (req, res) {
     });
 };
 
+
+//login
+
+exports.login=(req,res)=> {   
+        console.log("email"+req.body.EmailUser); 
+        console.log("password"+req.body.PasswordUser); 
+
+    
+      // Validate request
+      if(!req.body.EmailUser) {
+        return res.status(400).send({
+            message: "User EmailUser can not be empty"
+        });
+    }
+ 
+    if(!req.body.PasswordUser) {
+        return res.status(400).send({
+            message: "User PasswordUser can not be empty"
+        });
+    }
+         
+      
+        Users.findOne({EmailUser:req.body.EmailUser})
+        .then(users => {
+            if(!users) {
+                return res.status(404).send({
+                    message: "User not found with email " + req.body.EmailUser,
+                    status:'400',
+                    data: err
+                });            
+            }
+            if( users){
+                var passwordIsValid = bcrypt.compareSync(req.body.PasswordUser,users.PasswordUser);
+                console.log("passwordIsValid"+passwordIsValid); 
+                if (!passwordIsValid) {
+                    return res.status(401).send({
+                  error: 'Password Invalido',
+                  auth: false, 
+                  token: null
+                })
+              
+              }
+            
+              var tokenData = {
+                id:users._id,
+                EmailUser: users.EmailUser,
+                NameUser: users.NameUser,
+                TypeUser:users.TypeUser,
+                StatusUser:users.StatusUser
+                // ANY DATA
+              }
+         
+             var token =
+              jwt.sign(tokenData, config.SECRET_TOKEN, {
+                 expiresIn: 60 * 60 * 24 // expires in 24 hours
+              })
+           
+            
+            return res.status(200).send({
+                status: "success",
+                message: "User login",
+                auth: true,
+                token: token
+            });
+       }
+        }).catch(err => {
+            console.log(err)
+            if(err.kind === 'EmailUser') {
+                return res.status(404).send({
+                    message: "User not found with id " + req.body.EmailUser,
+                    status:'404',
+                    data: err
+                });                
+            }
+            return res.status(500).send({
+                message: "Error retrieving User with id " + req.body.EmailUser,
+                status:'500',
+                data: err
+            });
+    
+    
+        });
+    };
+    
+ //
+    
+    
+    
+
+
+//fin de login
 
 // Handle view users info
 exports.viewEmail= (req, res) => {
@@ -67,12 +169,14 @@ exports.viewEmail= (req, res) => {
 
 
 // Handle view users info
-exports.view= (req, res) => {
+exports.view=(req, res) => {
     console.log("view"); 
   // Validate request
+  
+
   if(!req.params.users_id) {
     return res.status(400).send({
-        message: "User users_id can not be empty"
+        message: "User NameUser can not be empty"
     });
 }
 
@@ -107,15 +211,7 @@ exports.view= (req, res) => {
     });
 };
 
-
-
-
-
-
-
-
-
-// Create and Save a new user
+// Create and Save a new Note
 exports.new= (req, res) => {
     console.log("new  " ); 
   // Validate request
@@ -137,7 +233,7 @@ exports.new= (req, res) => {
     users.NameUser = req.body.NameUser ? req.body.NameUser : users.NameUser;
     users.LastNameUser = req.body.LastNameUser;
     users.EmailUser = req.body.EmailUser;
-    users.PasswordUser = req.body.PasswordUser;
+    users.PasswordUser = bcrypt.hashSync(req.body.PasswordUser, 8);
     users.StatusUser = req.body.StatusUser;
     users.DateBeginUser = req.body.DateBeginUser;
     users.TypeUser = req.body.TypeUser;
@@ -170,11 +266,16 @@ exports.new= (req, res) => {
 
 
 
-// Update a user identified by the UserId in the request
+// Update a note identified by the UserId in the request
 exports.update = (req, res) => {
 
     console.log("update  " +   req.params.users_id); 
- 
+    // Validate Request
+    if(!req.params.users_id) {
+        return res.status(400).send({
+            message: "User id can not be empty"
+        });
+    }
 
 
       // Validate Request
@@ -185,7 +286,7 @@ exports.update = (req, res) => {
         });
     }
 
-    // Find User and update it with the request body
+    // Find note and update it with the request body
     Users.findByIdAndUpdate(req.params.users_id, {
         NameUser : req.body.NameUser ? req.body.NameUser : users.NameUser,
         LastNameUser : req.body.LastNameUser,
@@ -261,7 +362,7 @@ exports.delete = (req, res) => {
             });                
         }
         return res.status(500).send({
-            message: "Could not delete User with id " + req.params.users_id,
+            message: "Could not delete note with id " + req.params.users_id,
             status:'500',
             data: err
         });

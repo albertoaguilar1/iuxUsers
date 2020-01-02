@@ -25,9 +25,6 @@ var fs = require('fs'); var util = require('util');
 app.use(morgan('combined', {stream: fs.createWriteStream(__dirname + '/node.log', {flags : 'a'})}));
 
 
-
-/////////////////////////
-
 // Send message for default URL
 
 app.get('/', (req, res) => res.send('Hello World with Express Users'));

@@ -3,8 +3,15 @@
 var express = require('express');
 // Llamamos al router
 var api = express.Router();
+//jwt token
+var jwt = require('jsonwebtoken')
 // Cargamos el controlador
 var usersController = require('../controllers/user');
+
+var authenticated = require('../middlewares/authenticated');
+var verifiToken = require('../middlewares/verifiToken');
+
+
 
 
 
@@ -26,13 +33,20 @@ api.get('/',function(req,res){
     
     
     api.route('/users/:users_id')
-    .get(usersController.view)
+    .get(authenticated,usersController.view)
     .patch(usersController.update)
     .put(usersController.update)
     .delete(usersController.delete);
     
+    
     api.route('/users/email/:EmailUser')
-    .get(usersController.viewEmail)
+    .get(usersController.viewEmail);
+   
+
+
+    api.route('/login')
+    .post(usersController.login);
+     
 
 // Exportamos la configuración
 module.exports = api;

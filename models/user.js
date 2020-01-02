@@ -2,6 +2,8 @@
 // Cargamos el módulo de mongoose
 var mongoose =  require('mongoose');
 // Usaremos los esquemas
+//cargamos plugin uniquevalidator para evitar correo repetido
+var uniqueValidator = require('mongoose-unique-validator');
 
 // Usaremos los esquemas
 // Creamos el objeto del esquema y sus atributos
@@ -16,9 +18,15 @@ var UsersSchema = mongoose.Schema({
         required: true
     },
     EmailUser: {
-        type: String,
+        type: String, 
+        index: true, 
+        unique    : [ true, 'El correo está duplicado'],
+        maxlength : [ 100, 'El correo no puede exceder los 100 caracteres'] ,
+        match     : [/.+\@.+\..+/, 'Por favor ingrese un correo válido'] ,
+        // <- Validación regexp para correo        
         required: true
     },
+
     PasswordUser: {
         type: String,
         required: true
@@ -49,6 +57,8 @@ var UsersSchema = mongoose.Schema({
 
 });
 // Export Users model
+
+userSchema.plugin(uniqueValidator,{  message: 'Ya existe el correo o ID {VALUE} en la base de datos' });
 var Users = module.exports = mongoose.model('Users', UsersSchema);
 module.exports.get = function (callback, limit) {
     Users.find(callback).limit(limit);
