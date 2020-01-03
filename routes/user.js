@@ -9,11 +9,6 @@ var jwt = require('jsonwebtoken')
 var usersController = require('../controllers/user');
 
 var authenticated = require('../middlewares/authenticated');
-var verifiToken = require('../middlewares/verifiToken');
-
-
-
-
 
 
 
@@ -28,21 +23,20 @@ api.get('/',function(req,res){
 
     // Contact routes
     api.route('/users')
-    .get(usersController.index)
+    .get(authenticated,usersController.index)
     .post(usersController.new);
     
     
     api.route('/users/:users_id')
     .get(authenticated,usersController.view)
-    .patch(usersController.update)
-    .put(usersController.update)
-    .delete(usersController.delete);
+    .patch(authenticated,usersController.update)
+    .put(authenticated,usersController.update)
+    .delete(authenticated,usersController.delete);
     
     
     api.route('/users/email/:EmailUser')
     .get(usersController.viewEmail);
    
-
 
     api.route('/login')
     .post(usersController.login);

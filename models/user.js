@@ -22,6 +22,7 @@ var UsersSchema = mongoose.Schema({
         index: true, 
         unique    : [ true, 'El correo está duplicado'],
         maxlength : [ 100, 'El correo no puede exceder los 100 caracteres'] ,
+
         match     : [/.+\@.+\..+/, 'Por favor ingrese un correo válido'] ,
         // <- Validación regexp para correo        
         required: true
@@ -29,7 +30,8 @@ var UsersSchema = mongoose.Schema({
 
     PasswordUser: {
         type: String,
-        required: true
+        required: true,
+   
     },
     StatusUser: {
         type: Boolean,
@@ -37,7 +39,7 @@ var UsersSchema = mongoose.Schema({
     },
     DateBeginUser: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     } ,
     TypeUser: {
         IdType: {
@@ -58,7 +60,8 @@ var UsersSchema = mongoose.Schema({
 });
 // Export Users model
 
-userSchema.plugin(uniqueValidator,{  message: 'Ya existe el correo o ID {VALUE} en la base de datos' });
+UsersSchema.plugin(uniqueValidator,{  message: 'Ya existe el correo o ID {VALUE} en la base de datos' });
+// Export Users model
 var Users = module.exports = mongoose.model('Users', UsersSchema);
 module.exports.get = function (callback, limit) {
     Users.find(callback).limit(limit);
