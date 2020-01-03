@@ -14,14 +14,18 @@ var config = require('../config');
 
 // Handle index actions
 exports.index = function (req, res) {
+    console.log("index")
     Users.get(function (err, users) {
         if (err) {
+          
             return res.status(404).send({
                 status: "error",
                 message: err,
             });
         }
+
            return res.status(200).send({
+            
             status: "success",
             message: "Users retrieved successfully",
             data: users
@@ -61,7 +65,6 @@ exports.login=(req,res)=> {
             }
             if( users){
                 var passwordIsValid = bcrypt.compareSync(req.body.PasswordUser,users.PasswordUser);
-                console.log("passwordIsValid"+passwordIsValid); 
                 if (!passwordIsValid) {
                     return res.status(401).send({
                   error: 'Password Invalido',
@@ -94,7 +97,7 @@ exports.login=(req,res)=> {
             });
        }
         }).catch(err => {
-            console.log(err)
+       
             if(err.kind === 'EmailUser') {
                 return res.status(404).send({
                     message: "User not found with id " + req.body.EmailUser,
@@ -212,19 +215,13 @@ exports.new= (req, res) => {
     console.log("new  " ); 
   // Validate request
   if(!req) {
-    console.log("req.body  " ); 
     return res.status(400).send({
         message: "User body can not be empty",
         data: res.err
     });
 }
 
-  //Validate request
- /* if(!req.body.NameUser) {
-    return res.status(400).send({
-        message: "User NameUser can not be empty"
-    });
-    }*/
+
 
     var users = new Users();
     users.NameUser = req.body.NameUser ? req.body.NameUser : users.NameUser;
@@ -232,7 +229,7 @@ exports.new= (req, res) => {
     users.EmailUser = req.body.EmailUser;
     users.PasswordUser = bcrypt.hashSync(req.body.PasswordUser, 8);
     users.StatusUser = req.body.StatusUser;
-    users.DateBeginUser = req.body.DateBeginUser ? req.body.NameUser : new Date();
+    users.DateBeginUser = req.body.DateBeginUser ? req.body.DateBeginUser : new Date();
     users.TypeUser = req.body.TypeUser;
     // Save User in the database
     users.save()
@@ -243,9 +240,9 @@ exports.new= (req, res) => {
             data: users
         });
     }).catch(err => {     
-        res.status(500).send({
+        res.status(400).send({
             message: err.message || "Some error occurred while creating the User.",
-            status:'500',
+            status:'400',
             data: err
            
         });
@@ -261,30 +258,18 @@ exports.new= (req, res) => {
 // Update a note identified by the UserId in the request
 exports.update = (req, res) => {
     console.log("update  " +   req.params.users_id); 
-    // Validate Request
-    if(!req.params.users_id) {
-        return res.status(400).send({
-            message: "User id can not be empty"
-        });
-    }
-      // Validate Request
-      if(!req.body) {
-        console.log("update  " +  req.body); 
-        return res.status(400).send({
-            message: "User body can not be empty"
-        });
-    }
     // Find note and update it with the request body
-    Users.findByIdAndUpdate(req.params.users_id, {
+
+    Users.findByIdAndUpdate({ _id: req.params.users_id }, {
         NameUser : req.body.NameUser ? req.body.NameUser : users.NameUser,
-        LastNameUser : req.body.LastNameUser,
-        EmailUser :req.body.EmailUser,
-        PasswordUser : req.body.PasswordUser,
-        StatusUser : req.body.StatusUser,
-        DateBeginUser : users.DateBeginUser, 
-        TypeUser : req.body.TypeUser,  
-    }, {new: true})
+        LastNameUser : req.body.LastNameUser ? req.body.LastNameUser : users.LastNameUser,
+        StatusUser : req.body.StatusUser ? req.body.StatusUser : users.StatusUser, 
+        EmailUser: req.body.EmailUser ? req.body.EmailUser : users.EmailUser,
+        PasswordUser : bcrypt.hashSync(req.body.PasswordUser, 8),
+        DateBeginUser : new Date()
+    }, {new: true})   
     .then(users => {
+
         if(!users) {
             return res.status(404).send({
                 message: "User not found with id " + req.params.users_id,
@@ -299,6 +284,7 @@ exports.update = (req, res) => {
         });
                
     }).catch(err => {
+        console.log("err"+err);
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
                 message: "User not found with id " + req.params.users_id,
@@ -341,16 +327,16 @@ exports.delete = (req, res) => {
             data: users
         });
     }).catch(err => {
-        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+        if(err.kind === 'ObjectId' || err.name === 'Not Found') {
             return res.status(404).send({
-                message: "User not found with id " + req.params.users_id,
+                message: "can not delete User with id " + req.params.users_id,
                 status:'404',
                 data: err
             });                
         }
-        return res.status(500).send({
-            message: "Could not delete users with id " + req.params.users_id,
-            status:'500',
+        return res.status(404).send({
+            message: "Could not delete User with id  " + req.params.users_id,
+            status:'404',
             data: err
         });
     });

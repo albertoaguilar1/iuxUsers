@@ -10,14 +10,13 @@ var config = require('../config');
 
 
 function ensureAuth(req, res, next) {
-console.log('aunteticado');
 if(!req.headers.authorization){
     return res.status(403).send({message: 'La peticion no tiene la cabecera de autenticación'});
 } else {
     var token = req.headers.authorization.replace(/['"]+/g, '');
 try{
         var payload = jwt.decode(token, config.SECRET_TOKEN);
-        console.log(payload);
+        console.log(payload.exp);
         console.log(moment().unix());
        if(payload.exp < moment().unix()){
             return res.status(401).send({
