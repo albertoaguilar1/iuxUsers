@@ -7,11 +7,6 @@ var bcrypt = require('bcryptjs');
 var Users = require('../models/user');
 var config = require('../config');
 
-
-
-
-
-
 // Handle index actions
 exports.index = function (req, res) {
     console.log("index")
@@ -85,7 +80,7 @@ exports.login=(req,res)=> {
          
              var token =
               jwt.sign(tokenData, config.SECRET_TOKEN, {
-                 expiresIn: 60 * 60 * 24 // expires in 24 hours
+                 expiresIn: 60 * 60 * 1           // expires in 1 hours
               })
            
             
@@ -210,7 +205,7 @@ exports.view=(req, res) => {
     });
 };
 
-// Create and Save a new Note
+// Create and Save a new User
 exports.new= (req, res) => {
     console.log("new  " ); 
   // Validate request

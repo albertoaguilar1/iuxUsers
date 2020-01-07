@@ -20,10 +20,10 @@ var UsersSchema = mongoose.Schema({
     EmailUser: {
         type: String, 
         index: true, 
-        unique    : [ true, 'El correo está duplicado'],
-        maxlength : [ 100, 'El correo no puede exceder los 100 caracteres'] ,
+        unique    : [ true, 'The email is duplicated'],
+        maxlength : [ 100, 'The email cannot exceed 100 characters'] ,
 
-        match     : [/.+\@.+\..+/, 'Por favor ingrese un correo válido'] ,
+        match     : [/.+\@.+\..+/, 'Please enter a valid email'] ,
         // <- Validación regexp para correo        
         required: true
     },
@@ -60,7 +60,7 @@ var UsersSchema = mongoose.Schema({
 });
 // Export Users model
 
-UsersSchema.plugin(uniqueValidator,{  message: 'Ya existe el correo o ID {VALUE} en la base de datos' });
+UsersSchema.plugin(uniqueValidator,{  message: 'The email or ID {VALUE} already exists in the database' });
 // Export Users model
 var Users = module.exports = mongoose.model('Users', UsersSchema);
 module.exports.get = function (callback, limit) {

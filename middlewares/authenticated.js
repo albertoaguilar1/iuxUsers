@@ -11,7 +11,7 @@ var config = require('../config');
 
 function ensureAuth(req, res, next) {
 if(!req.headers.authorization){
-    return res.status(403).send({message: 'La peticion no tiene la cabecera de autenticación'});
+    return res.status(403).send({message: 'The request does not have the authentication header'});
 } else {
     var token = req.headers.authorization.replace(/['"]+/g, '');
 try{
@@ -20,12 +20,12 @@ try{
         console.log(moment().unix());
        if(payload.exp < moment().unix()){
             return res.status(401).send({
-                message: 'EL token ha expirado'
+                message: 'The token has expired'
             });
         }
     } catch (ex){
         return res.status(404).send({
-            message: 'EL token no es valido'
+            message: 'Token is not valido'
         });
     }
 req.user = payload;

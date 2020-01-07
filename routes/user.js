@@ -16,7 +16,7 @@ var authenticated = require('../middlewares/authenticated');
 api.get('/',function(req,res){
     res.json({
         status:'API USERS WORKING',
-        message:'Bienvenido a la raiz del servicio'
+        message:'Welcome to the root of the service'
     });
 });
 
