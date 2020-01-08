@@ -44,10 +44,10 @@ it('Should  not insert json users why Correo ya existente', function(done){
     request.post('/api/users')      
     .send({NameUser:"test", LastNameUser: "test" , EmailUser: "test@xxx.com",  PasswordUser:"test",StatusUser:true, TypeUser:{IdType:"1",Role:"Admin",DescripTypeUser:"Control de modulos"} } )
         .expect('Content-Type', /json/)
-        .end( function(err,res){                         
+        .end( function(err,res){               
             expect(res).to.have.status(400);
             expect(res.body.status).to.equals("400");     
-            expect(res.body.data.message).to.equals("Users validation failed: EmailUser: Ya existe el correo o ID test@xxx.com en la base de datos");
+            expect(res.body.data.message).to.equals("Users validation failed: EmailUser: The email or ID test@xxx.com already exists in the database");
             done();
 });
 });
