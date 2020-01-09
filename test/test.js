@@ -16,6 +16,8 @@ var request = request("http://localhost:8080")
 
  describe('users', function() { 
     describe('POST', function(){    
+
+        
         it('Should  insert json users', function(done){
         request.post('/api/users')
         .send({NameUser: "test"  , LastNameUser: "test" , EmailUser: "test@xxx.com",  PasswordUser:"test",StatusUser:true , TypeUser:{IdType:"1",Role:"Admin",DescripTypeUser:"Control de modulos"} } )    
@@ -105,7 +107,7 @@ it('Should  not insert json users why Correo ya existente', function(done){
                 done();
                });  
         });
-    
+ 
                     
 
 

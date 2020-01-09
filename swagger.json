@@ -33,17 +33,29 @@
           "tags": [
             "Users"
           ],
-          "description": "Create new Users in system",
+          "summary": "Create new Users in system",
+          "description": "Create an Users in system  ",
           "parameters": [
             {
               "name": "Users",
               "in": "body",
-              "description": "User that we want to create",
+              "Description": "User that we want to create",
               "schema": {
-                "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/Users"
+              }
+            },
+            {
+              "name": "Authorization",
+              "in": "header",
+              "Description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
               }
             }
           ],
+  
           "produces": [
             "application/json"
           ],
@@ -55,14 +67,30 @@
               }
             }
           }
-        }
-        ,
+        },
 
         "get": {
           "tags": [
             "Users"
           ],
+          "description":"Get an list of Users  record in system",
           "summary": "Get all Users  record in system",
+          "parameters": [
+           
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
           "responses": {
             "200": {
               "description": "OK",
@@ -73,21 +101,38 @@
           }
         }
       },
-      "/users/{usersId}": {
-        "parameters": [
-          {
-            "name": "UsersId",
-            "in": "path",
-            "required": true,
-            "description": "ID of Users that we want to find",
-            "type": "string"
-          }
-        ],
+      "/users/{users_id}": {
+
         "get": {
           "tags": [
             "Users"
           ],
-          "summary": "Get Users with given ID",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "schema": {
+            "type":"String",
+            "format":"String",
+            "required":true
+            }
+          },
+          {
+            "name": "users_id",
+            "in": "path",
+            "description": "ID of Users that we want to find",
+            "schema": {
+            "type":"String",
+            "required":true
+          }
+        
+          }
+
+          
+        ],
+        "description":"Get Users  given ID",
+          "summary": "Get Users with  ID",
           "responses": {
             "200": {
               "description": "User is found",
@@ -97,26 +142,33 @@
             }
           }
         },
-        "delete": {
-          "summary": "Delete User with given ID",
-          "tags": [
-            "Users"
-          ],
-          "responses": {
-            "200": {
-              "description": "User is deleted",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
-            }
-          }
-        },
+        
         "put": {
+          "description":"Update user  give ID",
           "summary": "Update user with give ID",
           "tags": [
             "Users"
           ],
           "parameters": [
+          
+            {
+              "name": "Authorization",
+              "in": "header",
+              "description": "Authorization",
+              "schema": {
+              "type":"String",
+              "format":"String",
+              "required":true
+              } },  {
+                "name": "users_id",
+                "in": "path",
+                "description": "ID of Users that we want to find",
+                "schema": {
+                "type":"String",
+                "required":true
+              }
+            
+              },
             {
               "name": "user",
               "in": "body",
@@ -125,6 +177,7 @@
                 "$ref": "#/definitions/Users"
               }
             }
+     
           ],
           "responses": {
             "200": {
@@ -134,7 +187,47 @@
               }
             }
           }
+        },
+        "delete": {
+          "tags": [
+            "Users"
+          ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization",
+            "schema": {
+            "type":"String",
+            "format":"String",
+            "required":true
+            }
+          },
+          {
+            "name": "users_id",
+            "in": "path",
+            "description": "ID of Users that we want to find",
+            "schema": {
+            "type":"String",
+            "required":true
+          }
+        
+          }
+        ],
+          "description":"Delete User  given ID",
+          "summary": "Delete User with given ID",
+          "responses": {
+            "200": {
+              "description": "User is deleted",
+              "schema": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          }
         }
+        
+   
+        
       }
     },
     "definitions": {
@@ -145,33 +238,49 @@
           "EmailUser",
           "PasswordUser",
           "StatusUser",     
-          "DateBeginUser"
+          "DateBeginUser",
+          "TypeUser"
         ],
         "properties": {
           "_id": {
-            "type": "string",
-            "uniqueItems": true
+            "type": "string"
+           
           },
           "NameUser": {
-            "type": "string",
-            "uniqueItems": true
+            "type": "string"
+           
           },
           "LastNameUser": {
-            "type": "string",
-            "uniqueItems": true
+            "type": "string"
+        
           },
           "EmailUser": {
-            "type": "string",
-            "uniqueItems": true
+            "type": "string"
+    
           },
           "StatusUser": {
-            "type": "boolean",
-            "uniqueItems": true
+            "type": "boolean"
+          
           },
           "DateBeginUser": {
-            "type": "date",
-            "uniqueItems": true
-          }
+            "type": "string"
+         
+          },
+          "TypeUser": {
+            "IdType": {
+                "type": "String"
+              
+            },
+            "Role": {
+                "type": "String"
+              
+            },
+            "DescripTypeUser": {
+                "type": "String"
+                
+            }
+        }
+
         }
       }
     }
