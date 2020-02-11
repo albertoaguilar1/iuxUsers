@@ -37,14 +37,6 @@
           "description": "Create an Users in system  ",
           "parameters": [
             {
-              "name": "Users",
-              "in": "body",
-              "Description": "User that we want to create",
-              "schema": {
-              "$ref": "#/definitions/Users"
-              }
-            },
-            {
               "name": "Authorization",
               "in": "header",
               "Description": "Authorization",
@@ -53,7 +45,16 @@
               "format":"String",
               "required":true
               }
+            },
+            {
+              "name": "Users",
+              "in": "body",
+              "Description": "User that we want to create",
+              "schema": {
+              "$ref": "#/definitions/Users"
+              }
             }
+           
           ],
   
           "produces": [
@@ -266,7 +267,11 @@
             "type": "string"
          
           },
+
+      
           "TypeUser": {
+            "type":"object",
+          
             "IdType": {
                 "type": "String"
               

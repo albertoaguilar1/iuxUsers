@@ -1,5 +1,8 @@
 // Utilizar funcionalidades del Ecmascript 6
 'use strict'
+//para certificado openssl
+var fs = require('fs');
+var https = require('https');
 // Cargamos el módulo de mongoose para poder conectarnos a MongoDB
 var mongoose = require('mongoose');
 // *Cargamos el fichero app.js con la configuración de Express
