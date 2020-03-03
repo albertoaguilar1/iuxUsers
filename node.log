@@ -298,3 +298,4 @@
 ::1 - - [10/Feb/2020:19:14:27 +0000] "GET /api?timeout=32s HTTP/1.1" 200 77 "-" "kubectl.exe/v1.16.2 (windows/amd64) kubernetes/c97fe50"
 ::1 - - [10/Feb/2020:19:14:27 +0000] "GET /apis?timeout=32s HTTP/1.1" 404 46 "-" "kubectl.exe/v1.16.2 (windows/amd64) kubernetes/c97fe50"
 ::1 - - [10/Feb/2020:19:18:05 +0000] "GET /version?timeout=32s HTTP/1.1" 404 46 "-" "kubectl.exe/v1.16.2 (windows/amd64) kubernetes/c97fe50"
+::1 - - [03/Mar/2020:19:57:54 +0000] "POST /api/login HTTP/1.1" 200 435 "-" "PostmanRuntime/7.22.0"
